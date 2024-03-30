@@ -6,9 +6,11 @@ const draw = new Draw();
 
 export class Board{
     board;
+    playerCell;
     constructor()
     {
         this.board = [];
+        this.playerCell = null;
         createBoard(this.board);
     }
     
@@ -48,7 +50,8 @@ export class Board{
 
             if (this.isEmptyCell(cell)) {
                 draw.drawPlayer(randomX, randomY);
-                cell.type = "player";
+                this.playerCell = cell;
+                //console.log(cell);
                 countPlayers++;
             }
         }
@@ -64,21 +67,22 @@ export class Board{
     
         freeCell = this.findCell(cell);
         draw.drawItem1(freeCell[0], freeCell[1]);
-        this.board[freeCell[0]][freeCell[1]].type = "item1";
         let item1 = this.board[freeCell[0]][freeCell[1]];
         this.placeClueItem(item1, 1);
+        item1.type = "item1"
 
         freeCell = this.findCell(cell);
+        console.log(freeCell);
         draw.drawItem2(freeCell[0], freeCell[1]);
-        this.board[freeCell[0]][freeCell[1]].type = "item2";
         let item2 = this.board[freeCell[0]][freeCell[1]];
         this.placeClueItem(item2, 2);
+        item2.type = "item2";
 
         freeCell = this.findCell(cell);
         draw.drawItem3(freeCell[0], freeCell[1]);
-        this.board[freeCell[0]][freeCell[1]].type = "item3";
         let item3 = this.board[freeCell[0]][freeCell[1]];
         this.placeClueItem(item3, 3);
+        item3.type = "item3";
     }
 
     placeClueItem(item, n) {
@@ -123,6 +127,7 @@ export class Board{
                     if (this.isEmptyCell(nextCell)) {
                         draw.drawClueItem(newX, newY, direction, n);
                         nextCell.type = `clueItem${n}`;
+                        //console.log(nextCell);
                         found = true;
                         break;
                     }
@@ -157,10 +162,24 @@ export class Board{
         if (cell.type === "base") return true;
     }
 
+    getPlayer() {return this.playerCell}
+    getBoard(){ return this.board;}
+
+    isValidMove(x, y){ return x >= 0 && x < this.board.length && y >= 0 && y < this.board.length && this.board[x][y].type !== "center";}
+
+    writeCellTypes(){
+        this.board.forEach((row) => {
+            row.forEach((cell) => {
+                console.log(cell)
+            });
+        });
+    }
+
     render(){
         this.defineBoard();
         this.arrangeVisualComponents();
         this.arrangeHidenComponents();
+       // this.writeCellTypes();
     }
 }
 
