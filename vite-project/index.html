@@ -6,12 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
   </head>
-  <body class="bg-yellow-100">
-    <main class="container mx-auto space-y-2 my-1">
+  <body class="bg-yellow-100 flex flex-row">
 
-      <div>
+   <div class="fixed bg-orange-100 border-2 border-orange-400 
+   rounded-lg m-12 pr-5 pl-5 blur-sm" id="timer">Timer</div> 
 
-      </div> <!-- How many players -->
+   <div id="login"></div> <!-- How many players -->
+
+    <main class="container mx-auto space-y-2 my-1 blur-sm z-0">
+      
+
+      
 
       <div class="grid grid-cols-3 grid-rows-2 gap-4 border-2 border-orange-400 
       rounded-md w-5/6 mx-auto h-52 p-1" id="players">
@@ -27,6 +32,5 @@
       
     </main>
     <script type="module" src="/main.js"></script>
-    <script ></script>
   </body>
 </html>
