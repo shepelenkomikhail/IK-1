@@ -1,4 +1,3 @@
-import { s } from "vite/dist/node/types.d-aGj9QkWt";
 import { Board } from "./board";
 import { Draw } from "./draw";
 
@@ -30,7 +29,8 @@ export class Player {
             }
             else if (event.key === ' '){
                 event.preventDefault(); 
-                this.dig(player.x, player.y);
+                this.dig(board.getPlayer().x, board.getPlayer().y);
+
             } else return;
 
             if (board.isValidMove(x, y)) {
@@ -71,6 +71,7 @@ export class Player {
 
     dig(x,y){
         let cell = document.querySelector(`.cell.row-${x}.col-${y}`);
+        cell.classList.add('bg-transparent')
 
         switch(cell.getAttribute('alt')){
             case "item1":
@@ -82,20 +83,47 @@ export class Player {
             case "item3":
                 draw.drawItem3(x,y);
                 break;
-            case "clueItem1":
+            case "clueItem1down":
+                draw.drawClueItem(x,y,"down", 1);
+                break;
+            case "clueItem1up":
+                draw.drawClueItem(x,y,"up", 1);
+                break;
+            case "clueItem1left":
                 draw.drawClueItem(x,y,"left", 1);
                 break;
-            case "clueItem2":
+            case "clueItem1right":
+                draw.drawClueItem(x,y,"right", 1);
+                break;
+            case "clueItem2down":
+                draw.drawClueItem(x,y,"down", 2);
+                break;
+            case "clueItem2up":
+                draw.drawClueItem(x,y,"up", 2);
+                break;
+            case "clueItem2left":
+                draw.drawClueItem(x,y,"left", 2);
+                break;
+            case "clueItem2right":
                 draw.drawClueItem(x,y,"right", 2);
                 break;
-            case "clueItem3":
+            case "clueItem3down":
+                draw.drawClueItem(x,y,"down", 3);
+                break;
+            case "clueItem3up":
                 draw.drawClueItem(x,y,"up", 3);
+                break;
+            case "clueItem3left":
+                draw.drawClueItem(x,y,"left", 3);
+                break;
+            case "clueItem3right":
+                draw.drawClueItem(x,y,"right", 3);
                 break;
             case "oasis":
                 draw.drawOasis(x,y);
                 break;
             default: 
-                
+
         }
     }
 }

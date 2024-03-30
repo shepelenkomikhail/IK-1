@@ -39,21 +39,13 @@ export class Board{
                 countOasises++;
             }
         }
+        let randomX = this.getRandomInt(5);
+        let randomY = this.getRandomInt(5);
+        let cell = this.board[randomX][randomY];
 
-        let players = 1;
-        let countPlayers = 0;
-
-        while(countPlayers != players){
-            let randomX = this.getRandomInt(5);
-            let randomY = this.getRandomInt(5);
-            let cell = this.board[randomX][randomY];
-
-            if (this.isEmptyCell(cell)) {
-                draw.drawPlayer(randomX, randomY);
-                this.playerCell = cell;
-                //console.log(cell);
-                countPlayers++;
-            }
+        if (this.isEmptyCell(cell)) {
+            draw.drawPlayer(randomX, randomY);
+            this.playerCell = cell;
         }
     }
 
@@ -66,20 +58,20 @@ export class Board{
         cell = this.board[randomX][randomY];
     
         freeCell = this.findCell(cell);
-        draw.drawItem1(freeCell[0], freeCell[1]);
+        //draw.drawItem1(freeCell[0], freeCell[1]);
         let item1 = this.board[freeCell[0]][freeCell[1]];
         this.placeClueItem(item1, 1);
         item1.type = "item1"
 
         freeCell = this.findCell(cell);
         console.log(freeCell);
-        draw.drawItem2(freeCell[0], freeCell[1]);
+        //draw.drawItem2(freeCell[0], freeCell[1]);
         let item2 = this.board[freeCell[0]][freeCell[1]];
         this.placeClueItem(item2, 2);
         item2.type = "item2";
 
         freeCell = this.findCell(cell);
-        draw.drawItem3(freeCell[0], freeCell[1]);
+        //draw.drawItem3(freeCell[0], freeCell[1]);
         let item3 = this.board[freeCell[0]][freeCell[1]];
         this.placeClueItem(item3, 3);
         item3.type = "item3";
@@ -123,11 +115,13 @@ export class Board{
 
                 if (newX >= 0 && newX < this.board.length && newY >= 0 && newY < this.board[0].length) {
                     const nextCell = this.board[newX][newY];
-    
+
                     if (this.isEmptyCell(nextCell)) {
-                        draw.drawClueItem(newX, newY, direction, n);
+                        //draw.drawClueItem(newX, newY, direction, n);
+                        const nC = document.querySelector(`.cell.row-${newX}.col-${newY}`);
+                        nC.setAttribute('alt', `clueItem${n}${direction}`);
+
                         nextCell.type = `clueItem${n}`;
-                        //console.log(nextCell);
                         found = true;
                         break;
                     }

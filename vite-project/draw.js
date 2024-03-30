@@ -56,7 +56,7 @@ export class Draw{
  
     drawClueItem(x, y, direction, n){
         let cell = document.querySelector(`.cell.row-${x}.col-${y}`);
-        cell.setAttribute('alt', `clueItem${n}`);
+        //cell.setAttribute('alt', `clueItem${n}`);
         let itemClue = document.createElement('img');
         itemClue.classList.add('invisible');
         switch(direction){
