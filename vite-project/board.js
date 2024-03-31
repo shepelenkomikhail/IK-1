@@ -24,57 +24,53 @@ export class Board{
     }
 
     arrangeVisualComponents(){
-        draw.drawCenter(2,2);
-        this.board[2][2].type = "center";
-
         let countOasises = 0;
         while (countOasises < 4) {
             let randomX = this.getRandomInt(5);
             let randomY = this.getRandomInt(5);
             let cell = this.board[randomX][randomY];
 
-            if (this.isEmptyCell(cell)) {
+            if (this.isEmptyCell(cell) && (randomX !== 2 || randomY !== 2)) {
                 draw.drawOasis(randomX, randomY);
                 cell.type = "oasis";
                 countOasises++;
             }
         }
-        let randomX = this.getRandomInt(5);
-        let randomY = this.getRandomInt(5);
-        let cell = this.board[randomX][randomY];
-
-        if (this.isEmptyCell(cell)) {
-            draw.drawPlayer(randomX, randomY);
-            this.playerCell = cell;
-        }
+         let cell = this.board[2][2];
+         draw.drawPlayer(2, 2);
+         this.playerCell = cell;
     }
 
     arrangeHidenComponents(){
         let randomX, randomY;
         let cell, freeCell;
+        let c;
     
         randomX = this.getRandomInt(5);
         randomY = this.getRandomInt(5);
         cell = this.board[randomX][randomY];
     
         freeCell = this.findCell(cell);
-        //draw.drawItem1(freeCell[0], freeCell[1]);
         let item1 = this.board[freeCell[0]][freeCell[1]];
         this.placeClueItem(item1, 1);
         item1.type = "item1"
+        c = document.querySelector(`.cell.row-${freeCell[0]}.col-${freeCell[1]}`);
+        c.setAttribute('alt', 'item1');
 
         freeCell = this.findCell(cell);
         console.log(freeCell);
-        //draw.drawItem2(freeCell[0], freeCell[1]);
         let item2 = this.board[freeCell[0]][freeCell[1]];
         this.placeClueItem(item2, 2);
         item2.type = "item2";
+        c = document.querySelector(`.cell.row-${freeCell[0]}.col-${freeCell[1]}`);
+        c.setAttribute('alt', 'item2');
 
         freeCell = this.findCell(cell);
-        //draw.drawItem3(freeCell[0], freeCell[1]);
         let item3 = this.board[freeCell[0]][freeCell[1]];
         this.placeClueItem(item3, 3);
         item3.type = "item3";
+        c = document.querySelector(`.cell.row-${freeCell[0]}.col-${freeCell[1]}`);
+        c.setAttribute('alt', 'item3');
     }
 
     placeClueItem(item, n) {
@@ -117,7 +113,6 @@ export class Board{
                     const nextCell = this.board[newX][newY];
 
                     if (this.isEmptyCell(nextCell)) {
-                        //draw.drawClueItem(newX, newY, direction, n);
                         const nC = document.querySelector(`.cell.row-${newX}.col-${newY}`);
                         nC.setAttribute('alt', `clueItem${n}${direction}`);
 

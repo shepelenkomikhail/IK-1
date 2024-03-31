@@ -5,26 +5,30 @@ const board = new Board();
 board.render();
 
 const draw = new Draw();
+let firstMove = true;
+let player = board.getPlayer();
+//console.log(player);
+let x = player.x;
+let y = player.y;
 
 export class Player {
 
     movePlayer() {
-        let player = board.getPlayer();
-        //console.log(player);
-        let x = player.x;
-        let y = player.y;
-
         document.addEventListener('keydown', (event) => {
             if (event.key === 'ArrowUp') {
+                this.firstMove();
                 x--;
             }
             else if (event.key === 'ArrowDown') {
+                this.firstMove();
                 x++;
             }
             else if (event.key === 'ArrowLeft') {
+                this.firstMove();
                 y--;
             }
             else if (event.key === 'ArrowRight') {
+                this.firstMove();
                 y++;
             }
             else if (event.key === ' '){
@@ -42,9 +46,7 @@ export class Player {
                 let img = cell.querySelector('img');
                 cell.removeChild(img);
 
-                if (cell.getAttribute('alt') === "oasis") {
-                    draw.drawOasis(player.x, player.y); 
-                }
+                if (cell.getAttribute('alt') === "oasis") { draw.drawOasis(player.x, player.y); }
 
                 player.x = x;
                 player.y = y;
@@ -72,10 +74,13 @@ export class Player {
     dig(x,y){
         let cell = document.querySelector(`.cell.row-${x}.col-${y}`);
         cell.classList.add('bg-transparent')
-
+        console.log(cell.getAttribute('alt'));
         switch(cell.getAttribute('alt')){
             case "item1":
+                draw.drawPlayer(x+1,y);
                 draw.drawItem1(x,y);
+                player.x = x+1;
+                console.log(player.x, "item1");
                 break;
             case "item2":
                 draw.drawItem2(x,y);
@@ -124,6 +129,14 @@ export class Player {
                 break;
             default: 
 
+        }
+    }
+
+    firstMove(){
+        if (firstMove === true) {
+            draw.drawCenter(2,2); 
+            firstMove = false; 
+            board.board[2][2].type = "center";
         }
     }
 }

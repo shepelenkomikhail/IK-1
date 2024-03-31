@@ -34,6 +34,7 @@ export class Draw{
         item1.src = "./assets/Item 1.png";
         item1.classList.add('invisible');
         cell.append(item1);
+        console.log(cell);
     }
 
     drawItem2(x,y){
