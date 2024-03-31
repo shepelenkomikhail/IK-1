@@ -14,79 +14,95 @@ let y = player.y;
 export class Player {
 
     movePlayer() {
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'ArrowUp') {
-                this.firstMove();
-                x--;
-            }
-            else if (event.key === 'ArrowDown') {
-                this.firstMove();
-                x++;
-            }
-            else if (event.key === 'ArrowLeft') {
-                this.firstMove();
-                y--;
-            }
-            else if (event.key === 'ArrowRight') {
-                this.firstMove();
-                y++;
-            }
-            else if (event.key === ' '){
-                event.preventDefault(); 
-                this.dig(board.getPlayer().x, board.getPlayer().y);
-
-            } else return;
-
-            if (board.isValidMove(x, y)) {
-                let cell = document.querySelector(`.cell.row-${player.x}.col-${player.y}`);
-                //console.log(cell)
-
-                cell.classList.remove('border-4', 'border-orange-500');
-
-                let img = cell.querySelector('img');
-                cell.removeChild(img);
-
-                if (cell.getAttribute('alt') === "oasis") { draw.drawOasis(player.x, player.y); }
-
-                player.x = x;
-                player.y = y;
-
-                let newCell = document.querySelector(`.cell.row-${player.x}.col-${player.y}`);
-                newCell.classList.add('border-4', 'border-orange-500');
-
-                let existingImg = newCell.querySelector('img');
-                if (existingImg) {
-                    existingImg.remove();
+        if(!this.isEnd()){
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'ArrowUp') {
+                    this.firstMove();
+                    x--;
+                    this.moveAction(x, y);
                 }
+                else if (event.key === 'ArrowDown') {
+                    this.firstMove();
+                    x++;
+                    this.moveAction(x, y);
+                }
+                else if (event.key === 'ArrowLeft') {
+                    this.firstMove();
+                    y--;
+                    this.moveAction(x, y);
+                }
+                else if (event.key === 'ArrowRight') {
+                    this.firstMove();
+                    y++;
+                    this.moveAction(x, y);
+                }
+                else if (event.key === ' '){
+                    event.preventDefault(); 
+                    this.dig(board.getPlayer().x, board.getPlayer().y);
 
-                let playerImg = document.createElement('img');
-                playerImg.src = "./assets/Player.png";
-                
-                newCell.append(playerImg);
-                
-            } else {
-                x = player.x;
-                y = player.y;
+                } else return;
+            });
+        }   
+    }
+
+    moveAction(x, y){
+        if (board.isValidMove(x, y)) {
+            let cell = document.querySelector(`.cell.row-${player.x}.col-${player.y}`);
+
+            cell.classList.remove('border-4', 'border-orange-500');
+
+            let img = cell.querySelector('img');
+            let imgUrl = img.src;
+            let url = new URL(imgUrl);
+            let imagePath = url.pathname;
+            let relativePath = imagePath.substring(1);
+
+            if(relativePath === "assets/Player.png") {
+                cell.removeChild(img); 
+                console.log("removed");
+            } else console.log("not removed");
+
+            
+            if (cell.getAttribute('alt') === "oasis") { draw.drawOasis(player.x, player.y); }
+
+            player.x = x;
+            player.y = y;
+
+            let newCell = document.querySelector(`.cell.row-${player.x}.col-${player.y}`);
+            newCell.classList.add('border-4', 'border-orange-500');
+
+            let existingImg = newCell.querySelector('img');
+            if (existingImg) {
+                existingImg.remove();
             }
-        });
+
+            let playerImg = document.createElement('img');
+            playerImg.src = "./assets/Player.png";
+            
+            newCell.append(playerImg);
+            
+        } else {
+            x = player.x;
+            y = player.y;
+        }
     }
 
     dig(x,y){
         let cell = document.querySelector(`.cell.row-${x}.col-${y}`);
         cell.classList.add('bg-transparent')
-        console.log(cell.getAttribute('alt'));
+
         switch(cell.getAttribute('alt')){
             case "item1":
-                draw.drawPlayer(x+1,y);
                 draw.drawItem1(x,y);
-                player.x = x+1;
-                console.log(player.x, "item1");
+                this.foundElement("assets/Item 1.png");
                 break;
             case "item2":
                 draw.drawItem2(x,y);
+                this.foundElement("assets/Item 2.png");
                 break;
             case "item3":
                 draw.drawItem3(x,y);
+                this.foundElement("assets/Item 3.png");
                 break;
             case "clueItem1down":
                 draw.drawClueItem(x,y,"down", 1);
@@ -127,9 +143,9 @@ export class Player {
             case "oasis":
                 draw.drawOasis(x,y);
                 break;
-            default: 
-
+            default: draw.drawHole(x,y); break;
         }
+        cell.setAttribute('alt', 'digged');
     }
 
     firstMove(){
@@ -139,4 +155,36 @@ export class Player {
             board.board[2][2].type = "center";
         }
     }
+
+    isEnd(){
+        let foundElem = 0
+        const itemsCont = document.querySelector("#itemsCont")
+        const images = itemsCont.querySelectorAll("img");
+
+        images.forEach(img => {
+            if(!img.classList.contains('opacity-50')) foundElem++
+        });
+        
+        if(foundElem === 3) return true;
+    }
+
+    foundElement(element) {
+        const itemsCont = document.querySelector("#itemsCont");
+        const images = itemsCont.querySelectorAll("img");
+    
+        images.forEach(img => {
+            let url = new URL(img.src);
+            let relativePath = url.pathname.substring(1); 
+            let decodedPath = decodeURIComponent(relativePath); 
+
+            if(element === decodedPath) {
+                console.log("Found matching element:", element, decodedPath);
+                img.classList.remove('opacity-50');
+                return;
+            }
+        });
+    }
+    
+    
+    
 }

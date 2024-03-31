@@ -1,11 +1,11 @@
 const players = document.getElementById('players');
 
 export class PlayersMenu{
+    constructor(){this.itemsContainer = null}
     generateDivs (count) {
         for(let i = 0; i < count+1; i++){
             let div = document.createElement('div');
             let p = document.createElement('p');
-            let itemsContainer = document.createElement('div');
             let text = "";
 
             if (i === 1) {
@@ -24,7 +24,9 @@ export class PlayersMenu{
                 item3.src = "./assets/Item 3.png";
                 item3.classList.add('w-14', 'h-14', 'opacity-50');
     
-                itemsContainer.append(item1, item2, item3);
+                this.itemsContainer = document.createElement('div'); // Assign to the class property
+                this.itemsContainer.append(item1, item2, item3);
+                this.itemsContainer.setAttribute('id', 'itemsCont')
 
             } else if (i == 0) text = "Player " + (i + 1); else text = "Player " + i;
 
@@ -54,7 +56,7 @@ export class PlayersMenu{
             p.append(text);
             p.classList.add('ml-2')
             div.append(p);
-            if(i == 1) div.append(itemsContainer)
+            if(i == 1) div.append(this.itemsContainer)
             if(i != 1) div.append(playerContainer);
             div.classList.add('border-2', 'border-red-500', 'rounded-md')
             players.append(div)

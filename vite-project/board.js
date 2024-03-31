@@ -51,6 +51,7 @@ export class Board{
         cell = this.board[randomX][randomY];
     
         freeCell = this.findCell(cell);
+        console.log(freeCell);
         let item1 = this.board[freeCell[0]][freeCell[1]];
         this.placeClueItem(item1, 1);
         item1.type = "item1"
@@ -58,7 +59,6 @@ export class Board{
         c.setAttribute('alt', 'item1');
 
         freeCell = this.findCell(cell);
-        console.log(freeCell);
         let item2 = this.board[freeCell[0]][freeCell[1]];
         this.placeClueItem(item2, 2);
         item2.type = "item2";

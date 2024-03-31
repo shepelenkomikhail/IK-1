@@ -12,7 +12,7 @@ export class Draw{
 
     drawPlayer(x,y){
         let playerCell = document.querySelector(`.cell.row-${x}.col-${y}`);
-        playerCell.classList.add('border-4', 'border-orange-500');
+        playerCell.classList.add('border-4', 'border-orange-500', 'z-10');
         let player = document.createElement('img');
         player.src = "./assets/Player.png";
         playerCell.append(player);
@@ -21,7 +21,7 @@ export class Draw{
     drawOasis(x,y){
         let cell = document.querySelector(`.cell.row-${x}.col-${y}`);
         cell.setAttribute('alt', 'oasis');
-        cell.classList.add('bg-transparent');
+        cell.classList.add('bg-transparent', 'z-0');
         let oasis = document.createElement('img');
         oasis.src = "./assets/Oasis marker.png";
         cell.append(oasis);
@@ -31,18 +31,17 @@ export class Draw{
         let cell = document.querySelector(`.cell.row-${x}.col-${y}`);
         cell.setAttribute('alt', 'item1');
         let item1 = document.createElement('img');
+        cell.classList.add('z-0');
         item1.src = "./assets/Item 1.png";
-        item1.classList.add('invisible');
         cell.append(item1);
-        console.log(cell);
     }
 
     drawItem2(x,y){
         let cell = document.querySelector(`.cell.row-${x}.col-${y}`);
         cell.setAttribute('alt', 'item2');
         let item2 = document.createElement('img');
+        cell.classList.add('z-0');
         item2.src = "./assets/Item 2.png";
-        item2.classList.add('invisible');
         cell.append(item2);
     }
 
@@ -50,20 +49,18 @@ export class Draw{
         let cell = document.querySelector(`.cell.row-${x}.col-${y}`);
         cell.setAttribute('alt', 'item3');
         let item3 = document.createElement('img');
+        cell.classList.add('z-0');
         item3.src = "./assets/Item 3.png";
-        item3.classList.add('invisible');
         cell.append(item3);
     }
  
     drawClueItem(x, y, direction, n){
         let cell = document.querySelector(`.cell.row-${x}.col-${y}`);
-        //cell.setAttribute('alt', `clueItem${n}`);
         let itemClue = document.createElement('img');
-        itemClue.classList.add('invisible');
+        cell.classList.add('z-0');
         switch(direction){
             case "left":
                 itemClue.src = `./assets/Item ${n} - clue_LEFT.png`;
-                //console.log(itemClue.src);
                 break;
             case "right":
                 itemClue.src = `./assets/Item ${n} - clue_RIGHT.png`;
@@ -82,7 +79,8 @@ export class Draw{
 
     drawHole(x,y){
         let cell = document.querySelector(`.cell.row-${x}.col-${y}`);
-        cell.setAttribute('alt', 'untochable');
+        cell.setAttribute('alt', 'hole');
+        cell.classList.add('z-0');
         let hole = document.createElement('img');
         hole.src = "./assets/Hole.png";
         cell.append(hole);
