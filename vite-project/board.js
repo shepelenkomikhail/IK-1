@@ -9,7 +9,7 @@ export class Board{
     playerCell;
     constructor()
     {
-        this.board = [];
+        this.board = [];    
         this.playerCell = null;
         createBoard(this.board);
     }
@@ -24,6 +24,7 @@ export class Board{
     }
 
     arrangeVisualComponents(){
+        let drought = this.getRandomInt(3);
         let countOasises = 0;
         while (countOasises < 4) {
             let randomX = this.getRandomInt(5);
@@ -31,9 +32,15 @@ export class Board{
             let cell = this.board[randomX][randomY];
 
             if (this.isEmptyCell(cell) && (randomX !== 2 || randomY !== 2)) {
+                if(countOasises === drought){
+                    draw.drawOasis(randomX, randomY);
+                    cell.type = "Drought";
+                    countOasises++;
+                }else {
                 draw.drawOasis(randomX, randomY);
                 cell.type = "oasis";
                 countOasises++;
+                }
             }
         }
          let cell = this.board[2][2];
@@ -51,7 +58,7 @@ export class Board{
         cell = this.board[randomX][randomY];
     
         freeCell = this.findCell(cell);
-        console.log(freeCell);
+        //console.log(freeCell);
         let item1 = this.board[freeCell[0]][freeCell[1]];
         this.placeClueItem(item1, 1);
         item1.type = "item1"
@@ -116,7 +123,7 @@ export class Board{
                         const nC = document.querySelector(`.cell.row-${newX}.col-${newY}`);
                         nC.setAttribute('alt', `clueItem${n}${direction}`);
 
-                        nextCell.type = `clueItem${n}`;
+                        nextCell.type =  `clueItem${n}${direction}`;
                         found = true;
                         break;
                     }
@@ -148,27 +155,29 @@ export class Board{
     }
 
     isEmptyCell(cell){
-        if (cell.type === "base") return true;
+        if (cell.type === "Hole" && (cell.x !== 2 && cell.y !== 2)) return true;
     }
 
     getPlayer() {return this.playerCell}
     getBoard(){ return this.board;}
 
-    isValidMove(x, y){ return x >= 0 && x < this.board.length && y >= 0 && y < this.board.length && this.board[x][y].type !== "center";}
-
-    writeCellTypes(){
-        this.board.forEach((row) => {
-            row.forEach((cell) => {
-                console.log(cell)
-            });
-        });
+    isValidMove(x, y){ 
+        return x >= 0 && x < this.board.length && y >= 0 
+        && y < this.board.length && this.board[x][y].type !== "center";
     }
+
+    // writeCellTypes(){
+    //     this.board.forEach((row) => {
+    //         row.forEach((cell) => {
+    //             console.log(cell)
+    //         });
+    //     });
+    // }
 
     render(){
         this.defineBoard();
         this.arrangeVisualComponents();
         this.arrangeHidenComponents();
-       // this.writeCellTypes();
     }
 }
 

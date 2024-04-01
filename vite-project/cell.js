@@ -3,6 +3,7 @@ export class Cell {
       this.x = x;
       this.y = y;
       this.type = type;
+      this.dugItem = null;
     }
     getLayout() {
         return `<div class="cell bg-orange-300 border rounded-md border-black 
