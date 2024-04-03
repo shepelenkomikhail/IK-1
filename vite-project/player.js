@@ -6,6 +6,8 @@ export class Player{
         this.name = name;
         this.water = 6;
         this.turns = 3;
+        this.x = 2;
+        this.y = 2;
     }
 
     useTurn(x, y) {
@@ -34,7 +36,7 @@ export class Player{
 
             main.classList.add('blur-sm');
 
-            document.body.removeChild(document.querySelector('#timer'));
+            document.body.removeChild(document.querySelector('#fixed'));
 
             let endDialog = document.createElement('div');
             endDialog.classList.add('w-1/2', 'h-1/4', 'bg-amber-300', 'text-white', 

@@ -3,6 +3,7 @@ import { Player } from "./player";
 
 const board = new Board();
 board.render();
+const currElem = document.querySelector('#currentElement');
 
 export class Game {
     constructor(playerCount) {
@@ -76,9 +77,9 @@ export class Game {
         playersUI.forEach((playerUI, index) => {
             const player = this.players[index]; 
             if (index === this.currentPlayerIndex) {
-                playerUI.classList.add('border-4', 'border-green-500');
+                playerUI.classList.add('border-4', 'border-green-400');
             } else {
-                playerUI.classList.remove('border-4', 'border-green-500');
+                playerUI.classList.remove('border-4', 'border-green-400');
                 playerUI.classList.add('border-2', 'border-red');
             }
 
@@ -99,25 +100,28 @@ export class Game {
 
             if (board.getBoard()[this.player.x][this.player.y].dugItem){
                 const dugItemImage = `./assets/${board.getBoard()[this.player.x][this.player.y].dugItem}.png`;
-                oldCell.innerHTML = `<img src="${dugItemImage}" class="static" />`;
+                oldCell.innerHTML = `<img src="${dugItemImage}"/>`;
                 if(oldCell.classList.contains('border-4')) oldCell.classList.remove('border-4', 'border-orange-500');
             } else if ((board.getBoard()[this.player.x][this.player.y].type === "oasis" || 
             board.getBoard()[this.player.x][this.player.y].type === "Drought" && 
             !board.getBoard()[this.player.x][this.player.y].dugItem)){
-                oldCell.innerHTML = `<img src="./assets/Oasis marker.png" class="static z-0" />`;
+                oldCell.innerHTML = `<img src="./assets/Oasis marker.png" />`;
                 if(oldCell.classList.contains('border-4')) oldCell.classList.remove('border-4', 'border-orange-500');
             } else {
                 oldCell.innerHTML = '';
+                if(oldCell.classList.contains('border-4')) oldCell.classList.remove('border-4', 'border-orange-500');
             }
 
             if (board.getBoard()[x][y].dugItem) {
                 const dugItemImage = `./assets/${board.getBoard()[x][y].dugItem}.png`; 
-                newCell.innerHTML = `<img src="${playerImage}" /><img src="${dugItemImage}" class="static z-0" />`;
+                newCell.innerHTML = `<img src="${playerImage}" />`;
             } else {
-                newCell.innerHTML = `<img src="${playerImage}" class="relative z-10" />`;
+                newCell.innerHTML = `<img src="${playerImage}" class="relative" />`;
                 newCell.classList.add('border-4', 'border-orange-500');
                 if(oldCell.classList.contains('border-4')) oldCell.classList.remove('border-4', 'border-orange-500');
             }
+
+            
 
             this.player.x = x;
             this.player.y = y;
@@ -154,7 +158,10 @@ export class Game {
         if (dugItem) {
             cell.dugItem = dugItem;
             const dugItemImage = `./assets/${dugItem}.png`; 
-            cellElement.innerHTML += `<img src="${dugItemImage}" />`; 
+            //cellElement.innerHTML += `<img src="${dugItemImage}"/>`; 
+            const dugItemElement = `<img src="${dugItemImage}"/>`
+            currElem.innerHTML = dugItemElement;
+
             if (this.isEnd()) {
                 const main = document.querySelector('main');
 
