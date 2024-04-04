@@ -18,6 +18,7 @@ export class Game {
         this.firstMoveVar = true;
 
         this.player = board.getPlayer();
+
         this.x = this.player.x;
         this.y = this.player.y;
 
@@ -168,7 +169,7 @@ export class Game {
 
                 main.classList.add('blur-sm');
 
-                document.body.removeChild(document.querySelector('#timer'));
+                document.querySelector('#fixed').removeChild(document.querySelector('#timer'));
 
                 let endDialog = document.createElement('div');
                 endDialog.classList.add('w-1/2', 'h-1/4', 'bg-amber-300', 'text-white', 

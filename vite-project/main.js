@@ -14,8 +14,12 @@ const fixed = document.querySelector('#fixed');
 const loginDiv = document.querySelector('#login');
 
 const howMany = document.createElement('p');
+const namesPar = document.createElement('p');
 
-export function login(){
+const buttons = document.createElement('div');
+const inputs = document.createElement('div');
+
+function login(){
     const buttons = document.createElement('div');
     buttons.setAttribute('id', 'buttons');
     
@@ -51,18 +55,16 @@ export function login(){
 
 login();    
 
-export function names(playerCount){
+function names(playerCount){
     loginDiv.classList.add('flex', 'h-auto');
-    
     loginDiv.removeChild(howMany);
 
-    const namesPar = document.createElement('p');
     namesPar.classList.add('text-center', 'text-black', 'font-bold', 'pb-4', 'pt-4');
     namesPar.append('Please, write your names!');
+    namesPar.setAttribute('id', 'namesPar');
     
     loginDiv.removeChild(loginDiv.querySelector('#buttons'));
     
-    const inputs = document.createElement('div');
     inputs.classList.add('flex', 'flex-col', 'gap-4', 'mb-4', 'items-center', 'bg-amber-300');
     
     for(let i = 0; i < playerCount; i++){
@@ -76,21 +78,86 @@ export function names(playerCount){
     const start = document.createElement('button');
     start.classList.add('bg-green-600', 'text-white', 'p-2', 'm-2', 'rounded-md', 'hover:scale-110');
     start.textContent = 'Start';
+
     start.addEventListener('click', () => {
-        loginDiv.classList.add('invisible');
+        startFunction(playerCount, collectNames());
+    });
+
+    const setTimerButton = document.createElement('button');
+    setTimerButton.classList.add('bg-green-600', 'text-white', 'p-2', 'm-2', 'rounded-md', 'hover:scale-110');
+    setTimerButton.textContent = 'Set Timer';
+
+    setTimerButton.addEventListener('click', () => { setTime(playerCount, collectNames()); });
+    
+    buttons.classList.add('flex', 'gap-4', 'items-center', 'flex-row', 'bg-amber-300');
+    
+    buttons.append(start, setTimerButton);
+    loginDiv.append(namesPar);
+    loginDiv.append(inputs);
+    loginDiv.append(buttons);
+}
+
+function startFunction(playerCount, names) {
+    loginDiv.classList.add('invisible');
         main.classList.remove('blur-sm');
-        fixed.classList.remove('blur-sm')
-        let names = [];
-        document.querySelectorAll('input').forEach((input) => {input.value ? names.push(input.value) : 
-            names.push(`Player ${input.id}`)});
+        fixed.classList.remove('blur-sm');
 
         playersMenu.generateDivs(playerCount, names);
         const game = new Game(playerCount, names);
         game.movePlayer();
         timer.startTimer();
+}
+
+function setTime(playerCount, names){
+    loginDiv.removeChild(buttons);
+    loginDiv.removeChild(namesPar);
+    loginDiv.removeChild(inputs);
+
+    const timePar = document.createElement('p');
+    timePar.classList.add('text-center', 'text-black', 'font-bold', 'pb-4', 'pt-4');
+    timePar.append('Please, set a time for the game!');
+
+    const timerDiv = document.createElement('div');
+    timerDiv.classList.add('flex', 'flex-col', 'gap-4', 'items-center', 'bg-amber-300');
+    
+    const timeInput = document.createElement('div');
+    timeInput.classList.add('flex', 'gap-4', 'items-center', 'm-2');
+
+    const minInput = document.createElement('input');
+    const secInput = document.createElement('input');
+
+    minInput.setAttribute('type', 'number');
+    minInput.setAttribute('placeholder', 'Minutes');
+    minInput.setAttribute('min', '1');
+    minInput.setAttribute('max', '15');
+
+    minInput.classList.add('bg-amber-100', 'rounded-md', 'text-black', 'text-center', 'w-40');
+
+    secInput.setAttribute('type', 'number');
+    secInput.setAttribute('placeholder', 'Seconds');
+    secInput.setAttribute('min', '0');
+    secInput.setAttribute('max', '59');
+
+    secInput.classList.add('bg-amber-100', 'rounded-md', 'text-black', 'text-center', 'w-40');
+
+    const setTimeButton = document.createElement('button');
+    setTimeButton.classList.add('bg-green-600', 'text-white', 'p-2', 'mb-4', 'rounded-md', 'hover:scale-110');
+    setTimeButton.textContent = 'Set time and Start';
+
+    setTimeButton.addEventListener('click', () => {
+        startFunction(playerCount, names);
+        
     });
     
-    loginDiv.append(namesPar);
-    loginDiv.append(inputs);
-    loginDiv.append(start);
+    timeInput.append(minInput, secInput);
+    timerDiv.append(timeInput, setTimeButton);
+    loginDiv.append(timePar);
+    loginDiv.append(timerDiv);
+}
+
+function collectNames(){
+    let names = [];
+        document.querySelectorAll('input').forEach((input) => {input.value ? names.push(input.value) : 
+            names.push(`Player ${parseInt(input.id)+1}`)});
+    return names;
 }
