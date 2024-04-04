@@ -4,10 +4,14 @@ const players = document.getElementById('players');
 
 export class PlayersMenu{
     constructor(){this.itemsContainer = null}
-    generateDivs (count) {
+    generateDivs (count, names) {
+        console.log(count, names)
         for(let i = 0; i < count+1; i++){
             let div = document.createElement('div');
+            div.setAttribute('id', `playerBox`);
             let p = document.createElement('p');
+            p.setAttribute('id', `playerName`);
+            p.classList.add('font-bold', 'text-lg');
             let text = "";
 
             if (i === 1) {
@@ -31,7 +35,7 @@ export class PlayersMenu{
                 this.itemsContainer.append(item1, item2, item3);
                 this.itemsContainer.setAttribute('id', 'itemsCont')
 
-            } else if (i == 0) text = "Player " + (i + 1); else text = "Player " + i;
+            } else if (i == 0) text = `${names[i]}`; else if(i > 1) text = `${names[i - 1]}`;
 
             let playerContainer = document.createElement('div');
             playerContainer.classList.add('flex', 'gap-2', 'items-center', 'flex-row');

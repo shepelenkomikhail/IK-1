@@ -8,6 +8,7 @@ import { Board } from './board';
 const board = new Board();
 const playersMenu = new PlayersMenu();
 const timer = new Timer();
+
 const main = document.querySelector('main');
 const fixed = document.querySelector('#fixed');
 const loginDiv = document.querySelector('#login');
@@ -79,9 +80,12 @@ export function names(playerCount){
         loginDiv.classList.add('invisible');
         main.classList.remove('blur-sm');
         fixed.classList.remove('blur-sm')
-        
-        playersMenu.generateDivs(playerCount);
-        const game = new Game(playerCount);
+        let names = [];
+        document.querySelectorAll('input').forEach((input) => {input.value ? names.push(input.value) : 
+            names.push(`Player ${input.id}`)});
+
+        playersMenu.generateDivs(playerCount, names);
+        const game = new Game(playerCount, names);
         game.movePlayer();
         timer.startTimer();
     });

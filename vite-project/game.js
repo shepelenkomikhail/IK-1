@@ -6,12 +6,13 @@ board.render();
 const currElem = document.querySelector('#currentElement');
 
 export class Game {
-    constructor(playerCount) {
-        this.players = []; 
+    constructor(playerCount, names) {
+        this.players = [];
+
         for (let i = 0; i < playerCount; i++) {
-            this.players.push(new Player(`Player ${i + 1}`));
-            //console.log("new player created")
+            this.players.push(new Player(`${names[i]}`));
         }
+        console.log(this.players);
 
         this.currentPlayerIndex = 0; 
         this.firstMoveVar = true;

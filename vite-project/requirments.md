@@ -19,7 +19,7 @@ The most serious consequence of a disciplinary offence is dismissal from the uni
 [x] Digging: We can reveal the field element on which the player stands and what is indicated under it. (2 points)
 
 ### Normal requirements (12 points)
-[ ] Home screen: players have the option to set a name (0.5 points)
+[x] Home screen: players have the option to set a name (0.5 points)
 [x] Home screen: setting players' primary water supply (0.5 points)
 [x] Game board: clues are randomly assigned, initially invisible to the players. (1 point)
 [x] Game board: player data is displayed (0.5 points)
