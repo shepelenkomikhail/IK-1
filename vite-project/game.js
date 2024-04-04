@@ -122,7 +122,6 @@ export class Game {
                 newCell.classList.add('border-4', 'border-orange-500');
                 if(oldCell.classList.contains('border-4')) oldCell.classList.remove('border-4', 'border-orange-500');
             }
-
             
 
             this.player.x = x;

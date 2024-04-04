@@ -10,6 +10,7 @@ const playersMenu = new PlayersMenu();
 const timer = new Timer();
 
 const main = document.querySelector('main');
+const timerDiv = document.querySelector('#timer');
 const fixed = document.querySelector('#fixed');
 const loginDiv = document.querySelector('#login');
 
@@ -81,6 +82,7 @@ function names(playerCount){
 
     start.addEventListener('click', () => {
         startFunction(playerCount, collectNames());
+        timer.startTimer();
     });
 
     const setTimerButton = document.createElement('button');
@@ -105,7 +107,6 @@ function startFunction(playerCount, names) {
         playersMenu.generateDivs(playerCount, names);
         const game = new Game(playerCount, names);
         game.movePlayer();
-        timer.startTimer();
 }
 
 function setTime(playerCount, names){
@@ -115,7 +116,7 @@ function setTime(playerCount, names){
 
     const timePar = document.createElement('p');
     timePar.classList.add('text-center', 'text-black', 'font-bold', 'pb-4', 'pt-4');
-    timePar.append('Please, set a time for the game!');
+    timePar.append('Please, set a time for the game! (Max 15:59)');
 
     const timerDiv = document.createElement('div');
     timerDiv.classList.add('flex', 'flex-col', 'gap-4', 'items-center', 'bg-amber-300');
@@ -130,6 +131,7 @@ function setTime(playerCount, names){
     minInput.setAttribute('placeholder', 'Minutes');
     minInput.setAttribute('min', '1');
     minInput.setAttribute('max', '15');
+    minInput.setAttribute('value', '2');
 
     minInput.classList.add('bg-amber-100', 'rounded-md', 'text-black', 'text-center', 'w-40');
 
@@ -137,16 +139,33 @@ function setTime(playerCount, names){
     secInput.setAttribute('placeholder', 'Seconds');
     secInput.setAttribute('min', '0');
     secInput.setAttribute('max', '59');
+    secInput.setAttribute('value', '0');
 
     secInput.classList.add('bg-amber-100', 'rounded-md', 'text-black', 'text-center', 'w-40');
 
     const setTimeButton = document.createElement('button');
     setTimeButton.classList.add('bg-green-600', 'text-white', 'p-2', 'mb-4', 'rounded-md', 'hover:scale-110');
     setTimeButton.textContent = 'Set time and Start';
+    setTimeButton.setAttribute('type', 'submit');
 
     setTimeButton.addEventListener('click', () => {
+        if (!minInput.value) {
+            alert('Please fill in both minutes and seconds!');
+            return;
+        }
+
+        if (minInput.value < 0 || secInput.value < 0 || minInput.value > 15 || secInput.value > 59) {
+            alert('Please, set a valid time!');
+            return;
+        }
+
+        if(minInput.value < 1 ){alert('Please set a time greater then 1 min!'); return;}
+
+        if(!secInput.value) secInput.value = 0;
+
         startFunction(playerCount, names);
-        
+        timerDiv.innerHTML = '';
+        timer.setCountdown(minInput.value, secInput.value);
     });
     
     timeInput.append(minInput, secInput);

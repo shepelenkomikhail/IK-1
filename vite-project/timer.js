@@ -1,3 +1,4 @@
+import { endDialog } from "./endDialog";
 const timerElement = document.getElementById('timer');
 
 export class Timer {
@@ -24,4 +25,22 @@ export class Timer {
             this.updateTimerDisplay(secondsElapsed);
         }, 1000);
     }
+
+    setCountdown(min, sec) {    
+        if (this.timerInterval) clearInterval(this.timerInterval);
+
+        let totalSeconds = parseInt(min) * 60 + parseInt(sec);
+        this.updateTimerDisplay(totalSeconds);
+        
+        this.timerInterval = setInterval(() => {
+        totalSeconds--;
+
+        if (totalSeconds < 0){
+            endDialog("Out of time! You lost!");
+            clearInterval(this.timerInterval);
+        }
+        else this.updateTimerDisplay(totalSeconds);
+
+        }, 1000);
+    } 
 }

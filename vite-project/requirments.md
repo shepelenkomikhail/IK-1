@@ -39,6 +39,6 @@ The most serious consequence of a disciplinary offence is dismissal from the uni
 
 ### Extra requirements (5 points)
 [x] Game board: at the start of the game, start a counter that is updated every second to indicate the elapsed time of the game. (1 point)
-[ ] Home screen: allow the player(s) to specify how much time they want to complete the game, and after the specified time the game ends (1 point)
+[x] Home screen: allow the player(s) to specify how much time they want to complete the game, and after the specified time the game ends (1 point)
 [ ] Movement: the step is animated (1 point)
 [ ] Save: The game constantly saves its state in localStorage.(2 points)
