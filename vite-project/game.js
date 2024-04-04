@@ -77,9 +77,9 @@ export class Game {
         playersUI.forEach((playerUI, index) => {
             const player = this.players[index]; 
             if (index === this.currentPlayerIndex) {
-                playerUI.classList.add('border-4', 'border-green-400');
+                playerUI.classList.add('border-4', 'border-green-500');
             } else {
-                playerUI.classList.remove('border-4', 'border-green-400');
+                playerUI.classList.remove('border-4', 'border-green-500');
                 playerUI.classList.add('border-2', 'border-red');
             }
 
