@@ -25,5 +25,5 @@
 }
 
 .topPanelItem {
-    @apply w-14 h-14 opacity-50;
+    @apply w-14 h-14;
 }

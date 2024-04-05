@@ -1,5 +1,4 @@
 import { Board } from "./board";
-import { endDialog } from "./endDialog";
 import { Player } from "./player";
 
 const board = new Board();
@@ -159,7 +158,22 @@ export class Game {
 
             currElem.innerHTML = dugItemElement;
 
-            if (this.isEnd()) endDialog("Congratulations! You won!");
+            if (this.isEnd()) {
+                const main = document.querySelector('main');
+                main.classList.add('blur-sm');
+                document.querySelector('#fixed').removeChild(document.querySelector('#timer'));
+
+                let endDialog = document.createElement('div');
+                endDialog.classList.add('dialog');
+                endDialog.innerHTML = `<p class="text-center text-black font-bold">Congratulations, you won!</p>`
+                
+                let restartButton = document.createElement('button');
+                restartButton.textContent = "Restart";
+                restartButton.classList.add('custom-button');
+                restartButton.addEventListener('click', () => { window.location.reload();});
+                endDialog.append(restartButton);
+                document.body.append(endDialog);
+            }
         }
     }
 
@@ -181,10 +195,7 @@ export class Game {
         const images = itemsCont.querySelectorAll("img");
 
         images.forEach(img => {
-            if(!img.classList.contains('opacity-50')){
-                foundElem++
-                console.log(foundElem);
-            } 
+            if(!img.classList.contains('opacity-50')) foundElem++;
         });
         
         if(foundElem === 3) return true;

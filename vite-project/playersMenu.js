@@ -18,15 +18,15 @@ export class PlayersMenu{
 
                 let item1 = document.createElement('img');
                 item1.src = "./assets/item1.png";
-                item1.classList.add('topPanelItem');
+                item1.classList.add('topPanelItem', 'opacity-50');
     
                 let item2 = document.createElement('img');
                 item2.src = "./assets/item2.png";
-                item2.classList.add('topPanelItem');
+                item2.classList.add('topPanelItem', 'opacity-50');
     
                 let item3 = document.createElement('img');
                 item3.src = "./assets/item3.png";
-                item3.classList.add('topPanelItem');
+                item3.classList.add('topPanelItem', 'opacity-50');
     
                 this.itemsContainer = document.createElement('div');
                 this.itemsContainer.append(item1, item2, item3);
