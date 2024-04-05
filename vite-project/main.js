@@ -3,14 +3,11 @@ import './style.css'
 import { Game } from './game';
 import { PlayersMenu } from './playersMenu';
 import { Timer } from './timer';
-import { Board } from './board';
 
-const board = new Board();
 const playersMenu = new PlayersMenu();
 const timer = new Timer();
 
 const main = document.querySelector('main');
-const timerDiv = document.querySelector('#timer');
 const fixed = document.querySelector('#fixed');
 const loginDiv = document.querySelector('#login');
 
@@ -39,12 +36,9 @@ function login(){
         const playerCount = index + 1;
 
         button.textContent = `${playerCount} Player(s)`;
-        button.classList.add('bg-green-600', 'text-white', 'p-2', 'm-2', 
-            'rounded-md', 'hover:scale-110');
+        button.classList.add('custom-button');
 
-        button.addEventListener('click', () => {
-            names(playerCount);
-        });
+        button.addEventListener('click', () => {names(playerCount);});
     });
 
     howMany.textContent = "How many players do u want to play with?";
@@ -77,7 +71,7 @@ function names(playerCount){
     }
     
     const start = document.createElement('button');
-    start.classList.add('bg-green-600', 'text-white', 'p-2', 'm-2', 'rounded-md', 'hover:scale-110');
+    start.classList.add('custom-button');
     start.textContent = 'Start';
 
     start.addEventListener('click', () => {
@@ -86,7 +80,7 @@ function names(playerCount){
     });
 
     const setTimerButton = document.createElement('button');
-    setTimerButton.classList.add('bg-green-600', 'text-white', 'p-2', 'm-2', 'rounded-md', 'hover:scale-110');
+    setTimerButton.classList.add('custom-button');
     setTimerButton.textContent = 'Set Timer';
 
     setTimerButton.addEventListener('click', () => { setTime(playerCount, collectNames()); });
@@ -133,7 +127,7 @@ function setTime(playerCount, names){
     minInput.setAttribute('max', '15');
     minInput.setAttribute('value', '2');
 
-    minInput.classList.add('bg-amber-100', 'rounded-md', 'text-black', 'text-center', 'w-40');
+    minInput.classList.add('inputField');
 
     secInput.setAttribute('type', 'number');
     secInput.setAttribute('placeholder', 'Seconds');
@@ -141,10 +135,10 @@ function setTime(playerCount, names){
     secInput.setAttribute('max', '59');
     secInput.setAttribute('value', '0');
 
-    secInput.classList.add('bg-amber-100', 'rounded-md', 'text-black', 'text-center', 'w-40');
+    secInput.classList.add('inputField');
 
     const setTimeButton = document.createElement('button');
-    setTimeButton.classList.add('bg-green-600', 'text-white', 'p-2', 'mb-4', 'rounded-md', 'hover:scale-110');
+    setTimeButton.classList.add('custom-button');
     setTimeButton.textContent = 'Set time and Start';
     setTimeButton.setAttribute('type', 'submit');
 

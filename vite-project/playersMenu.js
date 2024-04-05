@@ -1,11 +1,8 @@
-import { Player } from "./player";
-
 const players = document.getElementById('players');
 
 export class PlayersMenu{
     constructor(){this.itemsContainer = null}
     generateDivs (count, names) {
-        console.log(count, names)
         for(let i = 0; i < count+1; i++){
             let div = document.createElement('div');
             div.setAttribute('id', `playerBox`);
@@ -21,15 +18,15 @@ export class PlayersMenu{
 
                 let item1 = document.createElement('img');
                 item1.src = "./assets/item1.png";
-                item1.classList.add('w-14', 'h-14', 'opacity-50');
+                item1.classList.add('topPanelItem');
     
                 let item2 = document.createElement('img');
                 item2.src = "./assets/item2.png";
-                item2.classList.add('w-14', 'h-14', 'opacity-50');
+                item2.classList.add('topPanelItem');
     
                 let item3 = document.createElement('img');
                 item3.src = "./assets/item3.png";
-                item3.classList.add('w-14', 'h-14', 'opacity-50');
+                item3.classList.add('topPanelItem');
     
                 this.itemsContainer = document.createElement('div');
                 this.itemsContainer.append(item1, item2, item3);

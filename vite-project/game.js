@@ -1,17 +1,17 @@
 import { Board } from "./board";
+import { endDialog } from "./endDialog";
 import { Player } from "./player";
 
 const board = new Board();
 board.render();
+
 const currElem = document.querySelector('#currentElement');
 
 export class Game {
     constructor(playerCount, names) {
         this.players = [];
 
-        for (let i = 0; i < playerCount; i++) {
-            this.players.push(new Player(`${names[i]}`));
-        }
+        for (let i = 0; i < playerCount; i++) {this.players.push(new Player(`${names[i]}`));}
         console.log(this.players);
 
         this.currentPlayerIndex = 0; 
@@ -29,34 +29,35 @@ export class Game {
         document.addEventListener('keydown', (event) => {
             const currentPlayer = this.players[this.currentPlayerIndex];
             this.updateUI();
+
             if (event.key === 'ArrowUp') {
                 this.x--;
                 const isAct = this.moveAction(this.x, this.y);
                 if(this.firstMoveVar) this.firstMove();
-                if(isAct) currentPlayer.useTurn(this.x, this.y);
+                if(isAct) currentPlayer.useTurn();
             }
             else if (event.key === 'ArrowDown') {
                 this.x++;
                 const isAct = this.moveAction(this.x, this.y);
                 if(this.firstMoveVar) this.firstMove();
-                if(isAct) currentPlayer.useTurn(this.x, this.y);
+                if(isAct) currentPlayer.useTurn();
             }
             else if (event.key === 'ArrowLeft') {
                 this.y--;
                 const isAct = this.moveAction(this.x, this.y);
                 if(this.firstMoveVar) this.firstMove();
-                if(isAct) currentPlayer.useTurn(this.x, this.y);
+                if(isAct) currentPlayer.useTurn();
             }
             else if (event.key === 'ArrowRight') {
                 this.y++;
                 const isAct = this.moveAction(this.x, this.y);
                 if(this.firstMoveVar) this.firstMove();
-                if(isAct) currentPlayer.useTurn(this.x, this.y);
+                if(isAct) currentPlayer.useTurn();
             }
             else if (event.key === ' '){
                 event.preventDefault(); 
                 this.dig(board.getPlayer().x, board.getPlayer().y);
-                currentPlayer.useTurn(this.x, this.y);
+                currentPlayer.useTurn();
             } else return;
 
             this.updateUI()
@@ -76,9 +77,9 @@ export class Game {
         playersUI.forEach((playerUI, index) => {
             const player = this.players[index]; 
             if (index === this.currentPlayerIndex) {
-                playerUI.classList.add('border-4', 'border-green-400');
+                playerUI.classList.add('playerUI-border');
             } else {
-                playerUI.classList.remove('border-4', 'border-green-400');
+                playerUI.classList.remove('playerUI-border');
                 playerUI.classList.add('border-2', 'border-red');
             }
 
@@ -100,15 +101,15 @@ export class Game {
             if (board.getBoard()[this.player.x][this.player.y].dugItem){
                 const dugItemImage = `./assets/${board.getBoard()[this.player.x][this.player.y].dugItem}.png`;
                 oldCell.innerHTML = `<img src="${dugItemImage}"/>`;
-                if(oldCell.classList.contains('border-4')) oldCell.classList.remove('border-4', 'border-orange-500');
+                if(oldCell.classList.contains('playerCell')) oldCell.classList.remove('playerCell');
             } else if ((board.getBoard()[this.player.x][this.player.y].type === "oasis" || 
             board.getBoard()[this.player.x][this.player.y].type === "Drought" && 
             !board.getBoard()[this.player.x][this.player.y].dugItem)){
                 oldCell.innerHTML = `<img src="./assets/Oasis marker.png" />`;
-                if(oldCell.classList.contains('border-4')) oldCell.classList.remove('border-4', 'border-orange-500');
+                if(oldCell.classList.contains('playerCell')) oldCell.classList.remove('playerCell');
             } else {
                 oldCell.innerHTML = '';
-                if(oldCell.classList.contains('border-4')) oldCell.classList.remove('border-4', 'border-orange-500');
+                if(oldCell.classList.contains('playerCell')) oldCell.classList.remove('playerCell');
             }
 
             if (board.getBoard()[x][y].dugItem) {
@@ -116,11 +117,10 @@ export class Game {
                 newCell.innerHTML = `<img src="${playerImage}" />`;
             } else {
                 newCell.innerHTML = `<img src="${playerImage}" class="relative" />`;
-                newCell.classList.add('border-4', 'border-orange-500');
-                if(oldCell.classList.contains('border-4')) oldCell.classList.remove('border-4', 'border-orange-500');
+                newCell.classList.add('playerCell');
+                if(oldCell.classList.contains('playerCell')) oldCell.classList.remove('playerCell');
             }
             
-
             this.player.x = x;
             this.player.y = y;
             return true
@@ -155,36 +155,11 @@ export class Game {
         if (dugItem) {
             cell.dugItem = dugItem;
             const dugItemImage = `./assets/${dugItem}.png`; 
-            const dugItemElement = `<img src="${dugItemImage}"/>`
+            const dugItemElement = `<img src="${dugItemImage}"/>`;
 
             currElem.innerHTML = dugItemElement;
 
-            if (this.isEnd()) {
-                const main = document.querySelector('main');
-
-                main.classList.add('blur-sm');
-
-                document.querySelector('#fixed').removeChild(document.querySelector('#timer'));
-
-                let endDialog = document.createElement('div');
-                endDialog.classList.add('w-1/2', 'h-1/4', 'bg-amber-300', 'text-white', 
-                'text-2xl', 'flex', 'justify-center', 'items-center', 'rounded-lg', 
-                'fixed', 'left-1/4', 'top-1/4' , 'transform', 'absolute', 
-                'z-10', 'flex-col');
-
-                endDialog.innerHTML = `<p class="text-center text-black font-bold">Congratulations, you won!</p>`
-                
-                let restartButton = document.createElement('button');
-                restartButton.textContent = "Restart";
-
-                restartButton.classList.add('bg-green-600', 'text-white', 'p-2', 'm-2', 'rounded-md', 'hover:scale-110');
-                restartButton.addEventListener('click', () => {
-                    window.location.reload();
-                });
-
-                endDialog.append(restartButton);
-                document.body.append(endDialog);
-            }
+            if (this.isEnd()) endDialog("Congratulations! You won!");
         }
     }
 

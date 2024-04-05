@@ -26,6 +26,7 @@ export class Board{
     arrangeVisualComponents(){
         let drought = this.getRandomInt(3);
         let countOasises = 0;
+
         while (countOasises < 4) {
             let randomX = this.getRandomInt(5);
             let randomY = this.getRandomInt(5);
@@ -36,7 +37,8 @@ export class Board{
                     draw.drawOasis(randomX, randomY);
                     cell.type = "Drought";
                     countOasises++;
-                }else {
+                }
+                else {
                 draw.drawOasis(randomX, randomY);
                 cell.type = "oasis";
                 countOasises++;
@@ -58,7 +60,6 @@ export class Board{
         cell = this.board[randomX][randomY];
     
         freeCell = this.findCell(cell);
-        //console.log(freeCell);
         let item1 = this.board[freeCell[0]][freeCell[1]];
         this.placeClueItem(item1, 1);
         item1.type = "item1"
@@ -127,9 +128,7 @@ export class Board{
                         found = true;
                         break;
                     }
-                } else {
-                    break;
-                }
+                } else break;
             }
     
             if (found) {
@@ -154,9 +153,7 @@ export class Board{
         return [randomX, randomY];
     }
 
-    isEmptyCell(cell){
-        if (cell.type === "Hole" && (cell.x !== 2 && cell.y !== 2)) return true;
-    }
+    isEmptyCell(cell){if (cell.type === "Hole" && (cell.x !== 2 && cell.y !== 2)) return true;}
 
     getPlayer() {return this.playerCell}
     getBoard(){ return this.board;}
@@ -165,14 +162,6 @@ export class Board{
         return x >= 0 && x < this.board.length && y >= 0 
         && y < this.board.length && this.board[x][y].type !== "center";
     }
-
-    // writeCellTypes(){
-    //     this.board.forEach((row) => {
-    //         row.forEach((cell) => {
-    //             console.log(cell)
-    //         });
-    //     });
-    // }
 
     render(){
         this.defineBoard();
