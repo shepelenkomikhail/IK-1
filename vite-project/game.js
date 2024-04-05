@@ -31,30 +31,27 @@ export class Game {
             this.updateUI();
             if (event.key === 'ArrowUp') {
                 this.x--;
-                this.moveAction(this.x, this.y);
-                this.firstMove();
-                //console.log(this.player.x)
-                currentPlayer.useTurn(this.x, this.y);
+                const isAct = this.moveAction(this.x, this.y);
+                if(this.firstMoveVar) this.firstMove();
+                if(isAct) currentPlayer.useTurn(this.x, this.y);
             }
             else if (event.key === 'ArrowDown') {
                 this.x++;
-                this.moveAction(this.x, this.y);
-                this.firstMove();
-                currentPlayer.useTurn(this.x, this.y);
+                const isAct = this.moveAction(this.x, this.y);
+                if(this.firstMoveVar) this.firstMove();
+                if(isAct) currentPlayer.useTurn(this.x, this.y);
             }
             else if (event.key === 'ArrowLeft') {
                 this.y--;
-                this.moveAction(this.x, this.y);
-                this.firstMove();
-                currentPlayer.useTurn(this.x, this.y);
+                const isAct = this.moveAction(this.x, this.y);
+                if(this.firstMoveVar) this.firstMove();
+                if(isAct) currentPlayer.useTurn(this.x, this.y);
             }
             else if (event.key === 'ArrowRight') {
-                //console.log("Before inc: " , this.y)
                 this.y++;
-                //console.log("After inc: " , this.y)
-                this.moveAction(this.x, this.y);
-                this.firstMove();
-                currentPlayer.useTurn(this.x, this.y);
+                const isAct = this.moveAction(this.x, this.y);
+                if(this.firstMoveVar) this.firstMove();
+                if(isAct) currentPlayer.useTurn(this.x, this.y);
             }
             else if (event.key === ' '){
                 event.preventDefault(); 
@@ -79,9 +76,9 @@ export class Game {
         playersUI.forEach((playerUI, index) => {
             const player = this.players[index]; 
             if (index === this.currentPlayerIndex) {
-                playerUI.classList.add('border-4', 'border-green-500');
+                playerUI.classList.add('border-4', 'border-green-400');
             } else {
-                playerUI.classList.remove('border-4', 'border-green-500');
+                playerUI.classList.remove('border-4', 'border-green-400');
                 playerUI.classList.add('border-2', 'border-red');
             }
 
@@ -134,7 +131,6 @@ export class Game {
         }
     }
     
-
     dig(x,y){
         const cell = board.getBoard()[x][y];
         const cellElement = document.querySelector(`.cell.row-${x}.col-${y}`);
@@ -159,8 +155,8 @@ export class Game {
         if (dugItem) {
             cell.dugItem = dugItem;
             const dugItemImage = `./assets/${dugItem}.png`; 
-            //cellElement.innerHTML += `<img src="${dugItemImage}"/>`; 
             const dugItemElement = `<img src="${dugItemImage}"/>`
+
             currElem.innerHTML = dugItemElement;
 
             if (this.isEnd()) {
@@ -193,25 +189,15 @@ export class Game {
     }
 
     firstMove(){
-        if (this.firstMoveVar === true) {
-            //console.log("First move");
-            let center = board.board[2][2];
-            center.type = "center";
-            //console.log("center type:", center.type);
-            let cellElem = document.querySelector(`.cell.row-2.col-2`);
-            //console.log("cellElem:", cellElem);
-            cellElem.setAttribute('alt', 'center');
-            //console.log("cellElem alt:", cellElem.alt);
-            cellElem.classList.add('bg-transparent', 'border-none');
-            //console.log("cellElem classList:", cellElem.classList);
-            let stargate = document.createElement('img');
-            stargate.src = "./assets/Stargate.png";
-            //console.log("stargate src:", stargate.src);
-            
-            cellElem.appendChild(stargate);
-            //console.log("cellElem:", cellElem);
-            this.firstMoveVar = false; 
-        }
+        let center = board.board[2][2];
+        center.type = "center";
+        let cellElem = document.querySelector(`.cell.row-2.col-2`);
+        cellElem.setAttribute('alt', 'center');
+        cellElem.classList.add('bg-transparent', 'border-none');
+        let stargate = document.createElement('img');
+        stargate.src = "./assets/Stargate.png";
+        cellElem.appendChild(stargate);
+        this.firstMoveVar = false;
     }
 
     isEnd(){
