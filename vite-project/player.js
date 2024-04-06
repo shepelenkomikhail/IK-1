@@ -7,6 +7,7 @@ export class Player{
         this.turns = 3;
         this.x = 2;
         this.y = 2;
+        this.firstMoveVar = true;
     }
 
     useTurn() {

@@ -1,8 +1,11 @@
 import { Board } from "./board";
+import { Draw } from "./draw";
 import { Player } from "./player";
 
 const board = new Board();
 board.render();
+
+const draw = new Draw();
 
 const currElem = document.querySelector('#currentElement');
 
@@ -14,10 +17,12 @@ export class Game {
         console.log(this.players);
 
         this.currentPlayerIndex = 0; 
-        this.firstMoveVar = true;
+        //this.firstMoveVar = true;
 
-        this.player = board.getPlayer();
-
+        this.player = this.players[this.currentPlayerIndex];
+        
+        this.players.forEach(player => {draw.drawPlayer(player.x, player.y);})
+        
         this.x = this.player.x;
         this.y = this.player.y;
 
@@ -27,37 +32,43 @@ export class Game {
     movePlayer() { 
         document.addEventListener('keydown', (event) => {
             const currentPlayer = this.players[this.currentPlayerIndex];
+
+            this.x = currentPlayer.x;
+            this.y = currentPlayer.y;
             this.updateUI();
 
             if (event.key === 'ArrowUp') {
                 this.x--;
                 const isAct = this.moveAction(this.x, this.y);
-                if(this.firstMoveVar) this.firstMove();
+                if(this.player.firstMoveVar) this.drawStargate();
                 if(isAct) currentPlayer.useTurn();
             }
             else if (event.key === 'ArrowDown') {
                 this.x++;
                 const isAct = this.moveAction(this.x, this.y);
-                if(this.firstMoveVar) this.firstMove();
+                if(this.player.firstMoveVar) this.drawStargate();
                 if(isAct) currentPlayer.useTurn();
             }
             else if (event.key === 'ArrowLeft') {
                 this.y--;
                 const isAct = this.moveAction(this.x, this.y);
-                if(this.firstMoveVar) this.firstMove();
+                if(this.player.firstMoveVar) this.drawStargate();
                 if(isAct) currentPlayer.useTurn();
             }
             else if (event.key === 'ArrowRight') {
                 this.y++;
                 const isAct = this.moveAction(this.x, this.y);
-                if(this.firstMoveVar) this.firstMove();
+                if(this.player.firstMoveVar) this.drawStargate();
                 if(isAct) currentPlayer.useTurn();
             }
             else if (event.key === ' '){
                 event.preventDefault(); 
-                this.dig(board.getPlayer().x, board.getPlayer().y);
+                this.dig(this.player.x, this.player.y);
                 currentPlayer.useTurn();
             } else return;
+
+            currentPlayer.x = this.x;
+            currentPlayer.y = this.y;
 
             this.updateUI()
             if (currentPlayer.turns === 0) { this.nextPlayer(); this.updateUI()}
@@ -65,10 +76,28 @@ export class Game {
     }
 
     nextPlayer() {
-        this.players[this.currentPlayerIndex].turns = 3;
+        const prevPlayer = this.players[this.currentPlayerIndex];
+        prevPlayer.turns = 3;
+    
         this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length;
+        this.player = this.players[this.currentPlayerIndex];
+        const currentPlayer = this.players[this.currentPlayerIndex];
+
+        if(currentPlayer.firstMoveVar) document.querySelector(`.cell.row-2.col-2`).innerHTML = '';
+        draw.drawPlayer(currentPlayer.x, currentPlayer.y);
+        
+        this.updatePlayer();
         this.updateUI();
-        console.log("next player")  
+        console.log("Next player");
+    }
+
+    updatePlayer() {
+        this.players.forEach((player, index) => {
+            const playerCell = document.querySelector(`.cell.row-${player.x}.col-${player.y}`);
+            const imgs = playerCell.querySelectorAll('img');
+            if (index === this.currentPlayerIndex) imgs.forEach(img => img.classList.remove('opacity-50'));
+            else imgs.forEach(img => img.classList.add('opacity-50'));
+        });
     }
 
     updateUI() {
@@ -101,28 +130,31 @@ export class Game {
                 const dugItemImage = `./assets/${board.getBoard()[this.player.x][this.player.y].dugItem}.png`;
                 oldCell.innerHTML = `<img src="${dugItemImage}"/>`;
                 if(oldCell.classList.contains('playerCell')) oldCell.classList.remove('playerCell');
-            } else if ((board.getBoard()[this.player.x][this.player.y].type === "oasis" || 
+            } 
+            else if ((board.getBoard()[this.player.x][this.player.y].type === "oasis" || 
             board.getBoard()[this.player.x][this.player.y].type === "Drought" && 
             !board.getBoard()[this.player.x][this.player.y].dugItem)){
                 oldCell.innerHTML = `<img src="./assets/Oasis marker.png" />`;
                 if(oldCell.classList.contains('playerCell')) oldCell.classList.remove('playerCell');
-            } else {
+            } 
+            else {
                 oldCell.innerHTML = '';
                 if(oldCell.classList.contains('playerCell')) oldCell.classList.remove('playerCell');
             }
 
+            
+            
             if (board.getBoard()[x][y].dugItem) {
-                const dugItemImage = `./assets/${board.getBoard()[x][y].dugItem}.png`; 
                 newCell.innerHTML = `<img src="${playerImage}" />`;
             } else {
                 newCell.innerHTML = `<img src="${playerImage}" class="relative" />`;
                 newCell.classList.add('playerCell');
                 if(oldCell.classList.contains('playerCell')) oldCell.classList.remove('playerCell');
             }
-            
+                        
             this.player.x = x;
             this.player.y = y;
-            return true
+            return true;
         } else {
             this.x = this.player.x;
             this.y = this.player.y;
@@ -177,7 +209,7 @@ export class Game {
         }
     }
 
-    firstMove(){
+    drawStargate(){
         let center = board.board[2][2];
         center.type = "center";
         let cellElem = document.querySelector(`.cell.row-2.col-2`);
@@ -186,7 +218,7 @@ export class Game {
         let stargate = document.createElement('img');
         stargate.src = "./assets/Stargate.png";
         cellElem.appendChild(stargate);
-        this.firstMoveVar = false;
+        this.player.firstMoveVar = false;
     }
 
     isEnd(){

@@ -5,12 +5,8 @@ const board = document.querySelector('#board');
 const draw = new Draw();
 
 export class Board{
-    board;
-    playerCell;
-    constructor()
-    {
+    constructor(){
         this.board = [];    
-        this.playerCell = null;
         createBoard(this.board);
     }
     
@@ -45,9 +41,6 @@ export class Board{
                 }
             }
         }
-         let cell = this.board[2][2];
-         draw.drawPlayer(2, 2);
-         this.playerCell = cell;
     }
 
     arrangeHidenComponents(){
@@ -155,7 +148,6 @@ export class Board{
 
     isEmptyCell(cell){if (cell.type === "Hole" && (cell.x !== 2 && cell.y !== 2)) return true;}
 
-    getPlayer() {return this.playerCell}
     getBoard(){ return this.board;}
 
     isValidMove(x, y){ 

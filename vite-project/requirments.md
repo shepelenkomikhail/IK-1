@@ -11,7 +11,7 @@ of another student's work as his or her own, it is a disciplinary offence.
 The most serious consequence of a disciplinary offence is dismissal from the university.
 
 ### Minimal requirements (not accepted without them, 8 points)
-[x] Other: The README.md file in the "Additional requirements" section is appropriately filled out and included in the uploaded package (0 points
+[x] Other: The README.md file in the "Additional requirements" section is appropriately filled out and included in the uploaded package (0 points)
 [x] Game board: The playing field is displayed with a 5x5 board. (1 point)
 [x] Game board: Oases appear in a random place on the same board (2 points)
 [x] Game board: The player's figure is placed in the centre of the board (1 point)
@@ -32,9 +32,9 @@ The most serious consequence of a disciplinary offence is dismissal from the uni
 [x] Game over: If a player runs out of water, it's game over. (0.5 points)
 [x] End of the game: If all three parts have been found, the game ends with victory. (0.5 points)
 [x] Multiplayer mode: set player number (0.5 points)
-[ ] Multiplayer mode: players' figures appear in the middle of the board (0.5 points)
-[ ] Multiplayer mode: the current player is indicated (0.5 points)
-[ ] Multiplayer mode: actions can only be performed with the current player (0.5 points)
+[x] Multiplayer mode: players' figures appear in the middle of the board (0.5 points)
+[x] Multiplayer mode: the current player is indicated (0.5 points)
+[x] Multiplayer mode: actions can only be performed with the current player (0.5 points)
 [x] Good-looking appearance (1 point)
 
 ### Extra requirements (5 points)
