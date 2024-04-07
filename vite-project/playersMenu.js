@@ -49,7 +49,7 @@ export class PlayersMenu{
             let amountTurn = 3;
             let turnText = document.createElement('p');
             turnText.textContent = amountTurn;
-            turnText.classList.add('font-bold', 'text-lg', 'turn-text');
+            turnText.classList.add('font-bold', 'text-lg', 'turn-text', 'mr-2');
 
             playerContainer.append(waterImg, waterText, turnImg, turnText);
             playerContainer.classList.add('mt-2');
