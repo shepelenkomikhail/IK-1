@@ -17,7 +17,6 @@ export class Game {
         console.log(this.players);
 
         this.currentPlayerIndex = 0; 
-        //this.firstMoveVar = true;
 
         this.player = this.players[this.currentPlayerIndex];
         
@@ -84,6 +83,7 @@ export class Game {
         const currentPlayer = this.players[this.currentPlayerIndex];
 
         if(currentPlayer.firstMoveVar) document.querySelector(`.cell.row-2.col-2`).innerHTML = '';
+        
         draw.drawPlayer(currentPlayer.x, currentPlayer.y);
         
         this.updatePlayer();
@@ -142,7 +142,11 @@ export class Game {
                 if(oldCell.classList.contains('playerCell')) oldCell.classList.remove('playerCell');
             }
 
-            
+            const remainingPlayers = this.players.filter(p => p.x === this.player.x && p.y === this.player.y && p !== this.player);
+            if (remainingPlayers.length > 0) {
+                oldCell.innerHTML = `<img src="${playerImage}" class="relative opacity-50" />`;
+                oldCell.classList.add('playerCell');
+            }
             
             if (board.getBoard()[x][y].dugItem) {
                 newCell.innerHTML = `<img src="${playerImage}" />`;
@@ -214,7 +218,7 @@ export class Game {
         center.type = "center";
         let cellElem = document.querySelector(`.cell.row-2.col-2`);
         cellElem.setAttribute('alt', 'center');
-        cellElem.classList.add('bg-transparent', 'border-none');
+        cellElem.classList.add('bg-transparent', 'border-none', );
         let stargate = document.createElement('img');
         stargate.src = "./assets/Stargate.png";
         cellElem.appendChild(stargate);

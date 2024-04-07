@@ -1,6 +1,7 @@
 export class Draw{
     drawPlayer(x,y){
         let playerCell = document.querySelector(`.cell.row-${x}.col-${y}`);
+
         if (!playerCell.classList.contains('playerCell')) {
             playerCell.classList.add('playerCell', 'player');
             let player = document.createElement('img');
@@ -17,7 +18,5 @@ export class Draw{
         oasis.src = "./assets/Oasis marker.png";
         cell.append(oasis);
     }
-
-    
     
 }
