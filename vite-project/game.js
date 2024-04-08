@@ -88,7 +88,6 @@ export class Game {
         
         this.updatePlayer();
         this.updateUI();
-        console.log("Next player");
     }
 
     updatePlayer() {
@@ -116,7 +115,6 @@ export class Game {
 
             if (waterText) waterText.textContent = player.water
             if (turnText) turnText.textContent = player.turns
-
         });
     }
 

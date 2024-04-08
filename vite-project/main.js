@@ -17,7 +17,7 @@ const namesPar = document.createElement('p');
 const buttons = document.createElement('div');
 const inputs = document.createElement('div');
 
-function login(){
+(function(){
     const buttons = document.createElement('div');
     buttons.setAttribute('id', 'buttons');
     
@@ -46,9 +46,7 @@ function login(){
 
     loginDiv.append(howMany);
     loginDiv.append(buttons);
-}
-
-login();    
+})(); 
 
 function names(playerCount){
     loginDiv.classList.add('flex', 'h-auto');

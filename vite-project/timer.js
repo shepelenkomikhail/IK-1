@@ -1,5 +1,8 @@
 import { endDialog } from "./endDialog";
+import { Board } from "./board";
+
 const timerElement = document.getElementById('timer');
+const board = new Board();
 
 export class Timer {
     constructor() {
