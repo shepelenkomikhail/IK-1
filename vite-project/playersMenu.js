@@ -17,15 +17,15 @@ export class PlayersMenu{
                 div.classList.add('row-span-2', 'flex', 'flex-col', 'items-center');
 
                 let item1 = document.createElement('img');
-                item1.src = "/public/item1.png";
+                item1.src = "/item1.png";
                 item1.classList.add('topPanelItem', 'opacity-50');
     
                 let item2 = document.createElement('img');
-                item2.src = "/public/item2.png";
+                item2.src = "/item2.png";
                 item2.classList.add('topPanelItem', 'opacity-50');
     
                 let item3 = document.createElement('img');
-                item3.src = "/public/item3.png";
+                item3.src = "/item3.png";
                 item3.classList.add('topPanelItem', 'opacity-50');
     
                 this.itemsContainer = document.createElement('div');
@@ -54,8 +54,8 @@ export class PlayersMenu{
             playerContainer.append(waterImg, waterText, turnImg, turnText);
             playerContainer.classList.add('mt-2');
 
-            waterImg.src = "/public/assets/Water.png";
-            turnImg.src = "/public/assets/Action Points.png";
+            waterImg.src = "/Water.png";
+            turnImg.src = "/Action Points.png";
 
             p.append(text);
             p.classList.add('ml-2')

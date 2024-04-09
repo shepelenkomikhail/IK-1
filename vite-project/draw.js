@@ -5,7 +5,7 @@ export class Draw{
         if (!playerCell.classList.contains('playerCell')) {
             playerCell.classList.add('playerCell', 'player');
             let player = document.createElement('img');
-            player.src = "/public/Player.png";
+            player.src = "/Player.png";
             playerCell.append(player);
         }
     }
@@ -15,7 +15,7 @@ export class Draw{
         cell.setAttribute('alt', 'oasis');
         cell.classList.add('bg-transparent', 'z-0', 'static');
         let oasis = document.createElement('img');
-        oasis.src = "/public/Oasis marker.png";
+        oasis.src = "/Oasis marker.png";
         cell.append(oasis);
     }
     
