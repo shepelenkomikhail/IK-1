@@ -172,13 +172,13 @@ export class Game {
 
         switch(dugItem){
             case "item1":
-                this.foundElement("/item1.png");
+                this.foundElement("item1.png");
                 break;
             case "item2":
-                this.foundElement("/item2.png");
+                this.foundElement("item2.png");
                 break;
             case "item3":
-                this.foundElement("/item3.png");
+                this.foundElement("item3.png");
             case "oasis":
                 this.refillWater();
                 break;
@@ -245,7 +245,6 @@ export class Game {
             let decodedPath = decodeURIComponent(relativePath); 
 
             if(element === decodedPath) {
-                console.log("Found matching element:", element, decodedPath);
                 img.classList.remove('opacity-50');
                 return;
             }
