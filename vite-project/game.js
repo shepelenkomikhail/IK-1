@@ -132,7 +132,7 @@ export class Game {
             else if ((board.getBoard()[this.player.x][this.player.y].type === "oasis" || 
             board.getBoard()[this.player.x][this.player.y].type === "Drought" && 
             !board.getBoard()[this.player.x][this.player.y].dugItem)){
-                oldCell.innerHTML = `<img src="/public/assets/Oasis marker.png" />`;
+                oldCell.innerHTML = `<img src="/public/Oasis marker.png" />`;
                 if(oldCell.classList.contains('playerCell')) oldCell.classList.remove('playerCell');
             } 
             else {
