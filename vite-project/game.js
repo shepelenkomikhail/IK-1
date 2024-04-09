@@ -122,17 +122,17 @@ export class Game {
         if (board.isValidMove(x, y)) {
             const oldCell = document.querySelector(`.cell.row-${this.player.x}.col-${this.player.y}`);
             const newCell = document.querySelector(`.cell.row-${x}.col-${y}`);
-            const playerImage = './assets/Player.png';
+            const playerImage = '/public/assets/Player.png';
 
             if (board.getBoard()[this.player.x][this.player.y].dugItem){
-                const dugItemImage = `./assets/${board.getBoard()[this.player.x][this.player.y].dugItem}.png`;
+                const dugItemImage = `/public/assets/${board.getBoard()[this.player.x][this.player.y].dugItem}.png`;
                 oldCell.innerHTML = `<img src="${dugItemImage}"/>`;
                 if(oldCell.classList.contains('playerCell')) oldCell.classList.remove('playerCell');
             } 
             else if ((board.getBoard()[this.player.x][this.player.y].type === "oasis" || 
             board.getBoard()[this.player.x][this.player.y].type === "Drought" && 
             !board.getBoard()[this.player.x][this.player.y].dugItem)){
-                oldCell.innerHTML = `<img src="./assets/Oasis marker.png" />`;
+                oldCell.innerHTML = `<img src="/public/assets/Oasis marker.png" />`;
                 if(oldCell.classList.contains('playerCell')) oldCell.classList.remove('playerCell');
             } 
             else {
@@ -172,13 +172,13 @@ export class Game {
 
         switch(dugItem){
             case "item1":
-                this.foundElement("assets/item1.png");
+                this.foundElement("/public/assets/item1.png");
                 break;
             case "item2":
-                this.foundElement("assets/item2.png");
+                this.foundElement("/public/assets/item2.png");
                 break;
             case "item3":
-                this.foundElement("assets/item3.png");
+                this.foundElement("/public/assets/item3.png");
             case "oasis":
                 this.refillWater();
                 break;
@@ -187,7 +187,7 @@ export class Game {
 
         if (dugItem) {
             cell.dugItem = dugItem;
-            const dugItemImage = `./assets/${dugItem}.png`; 
+            const dugItemImage = `/public/assets/${dugItem}.png`; 
             const dugItemElement = `<img src="${dugItemImage}"/>`;
 
             currElem.innerHTML = dugItemElement;
@@ -218,7 +218,7 @@ export class Game {
         cellElem.setAttribute('alt', 'center');
         cellElem.classList.add('bg-transparent', 'border-none', );
         let stargate = document.createElement('img');
-        stargate.src = "./assets/Stargate.png";
+        stargate.src = "/public/assets/Stargate.png";
         cellElem.appendChild(stargate);
         this.player.firstMoveVar = false;
     }
